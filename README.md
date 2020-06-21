@@ -1,1 +1,5 @@
-# Machine-Learning-HW2
+# Classification for 3D Medical plots
+运行generate.py文件后生成经mixup等数据处理后的数据
+为在Matlab中调用散射变换提取图像特征，图像数据保存为generateDone.mat文件
+transformClass.m进行图像特征提取的散射变换，并运用训练好的集成模型得到分类结果
+denseClass.ipynb运用DenseBlock构建三维卷积神经网络，得到测试集分类结果
