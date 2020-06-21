@@ -1,5 +1,5 @@
-addpath(genpath('E:\study\MachineLearning\scattering-transform-and-svm-for-medical-image-classification-code\scattering-transform-and-svm-for-medical-image-classification-code\scatnet-0.2'))
-addpath(genpath('E:\study\MachineLearning\scattering-transform-and-svm-for-medical-image-classification-code\scattering-transform-and-svm-for-medical-image-classification-code\libsvm-3.17'))
+addpath(genpath('E:\study\MachineLearning\up\scatnet'))
+addpath(genpath('E:\study\MachineLearning\up\libsvm-3.17'))
 
 %加载经mixup后的图像数据
 load('generateDone.mat');
