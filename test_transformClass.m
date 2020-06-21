@@ -1,42 +1,42 @@
 addpath(genpath('E:\study\MachineLearning\scattering-transform-and-svm-for-medical-image-classification-code\scattering-transform-and-svm-for-medical-image-classification-code\scatnet-0.2'))
 addpath(genpath('E:\study\MachineLearning\scattering-transform-and-svm-for-medical-image-classification-code\scattering-transform-and-svm-for-medical-image-classification-code\libsvm-3.17'))
 
-%¼ÓÔØ¾­mixupºóµÄÍ¼ÏñÊı¾İ
+%åŠ è½½ç»mixupåçš„å›¾åƒæ•°æ®
 load('generateDone.mat');
 load('label_train');
 
-%Í¼ÏñÌØÕ÷±ä»»µÄ²ÎÊı
+%å›¾åƒç‰¹å¾å˜æ¢çš„å‚æ•°
 filt_opt.L1 = 2;
 filt_opt.L2 = 2;
 filt_opt.J = 3;
 scat_opt.M = 2;
 
-%ÌáÈ¡ÑµÁ·¼¯ÌØÕ÷
+%æå–è®­ç»ƒé›†ç‰¹å¾
 for i=1:465
     data=reshape(double(train(i,:,:,:))/255,[32,32,32]);
     img=data;
-    %ÉèÖÃÉ¢Éä±ä»»µÄ²ÎÊı   
+    %è®¾ç½®æ•£å°„å˜æ¢çš„å‚æ•°   
     Wop = my_wavelet_factory_3d(size(img),filt_opt, scat_opt);
     Sx = scat(img, Wop);
-    %½øĞĞ±ä»»£¬µÃµ½×Ó´ø
+    %è¿›è¡Œå˜æ¢ï¼Œå¾—åˆ°å­å¸¦
     S = format_scat(Sx);
     for j=1:37
         SS=S(j,:,:,:);
         EE=SS(:).^2;
-        %feature1 ¾ùÖµ
+        %feature1 å‡å€¼
         F1(j)=mean(SS(:));
-        %feature2 ÄÜÁ¿
+        %feature2 èƒ½é‡
         F2(j)=norm(SS(:),2)^2;
-        %feature3 ±ê×¼²î
+        %feature3 æ ‡å‡†å·®
         F3(j)=std(SS(:));
-        %feature4 ìØ
+        %feature4 ç†µ
         p=EE./sum(EE);
         F4(j)=-sum(p.*log2(p));
     end
      X_train(i,:)=[F1 F2 F3 F4];
 end
 
-%ÌáÈ¡ÑéÖ¤¼¯ÌØÕ÷
+%æå–éªŒè¯é›†ç‰¹å¾
 for i=1:117
     data=reshape(double(test(i,:,:,:))/255,[32,32,32]);
     img=data;    
@@ -55,12 +55,12 @@ for i=1:117
         X_test(i,:)=[F1 F2 F3 F4];
 end
   
-%ÑµÁ·¼¯±êÇ©
+%è®­ç»ƒé›†æ ‡ç­¾
 Y_train=label;
 X_train(253,:)=X_train(252,:);
 Y_train(253)=Y_train(252);
 
-%¹éÒ»»¯ÌØÕ÷
+%å½’ä¸€åŒ–ç‰¹å¾
 for i=1:148
     X_train_norm(:,i)=(X_train(:,i)-mean(X_train(:,i)'))/std(X_train(:,i)');
 
@@ -73,16 +73,16 @@ len = 465;
 
 load('model_1.mat');
 
-%ÑéÖ¤¼¯
+%éªŒè¯é›†
 X_test2=double(X_test_norm);
 
-disp('ÑéÖ¤¼¯')
+disp('éªŒè¯é›†')
 [predict_label, accuracy, prob2] = svmpredict(zeros(117,1),X_test2, model_SVM,'-b 1');
  
 probb(:,m)=prob2(:,1);
 
 m=2
-%ÑµÁ·¼¯±êÇ©
+%è®­ç»ƒé›†æ ‡ç­¾
 Y_train=label;
 Y_train(253)=Y_train(252);
 
@@ -90,14 +90,14 @@ load('model_2.mat')
 
 X_test2=double(X_test_norm);
 
-disp('ÑéÖ¤¼¯')
+disp('éªŒè¯é›†')
 [predict_label, accuracy, prob2] = svmpredict(zeros(117,1) ,X_test2, model_SVM2,'-b 1');
  
-%¼¯³ÉÄ£ĞÍµÄ·ÖÀà½á¹û
+%é›†æˆæ¨¡å‹çš„åˆ†ç±»ç»“æœ
 probb(:,m)=prob2(:,1);
 prob=mean(probb')';
  
-%Éú³Écsv±í¸ñ
+%ç”Ÿæˆcsvè¡¨æ ¼
 
 name=["candidate11"
 "candidate13"
