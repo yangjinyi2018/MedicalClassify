@@ -71,7 +71,7 @@ m=1
 
 len = 465;
 
-load('model_1.mat');
+load('M1.mat');
 
 %验证集
 X_test2=double(X_test_norm);
@@ -86,7 +86,7 @@ m=2
 Y_train=label;
 Y_train(253)=Y_train(252);
 
-load('model_2.mat')
+load('M2.mat')
 
 X_test2=double(X_test_norm);
 
